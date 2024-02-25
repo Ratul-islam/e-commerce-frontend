@@ -1,8 +1,9 @@
 import React from 'react'
-
-const Dashboard = () => {
+const Dashboard = ({children}) => {
   return (
-    <div>Dashboard</div>
+    <section className='flex'>
+        {children}
+    </section>
   )
 }
 
