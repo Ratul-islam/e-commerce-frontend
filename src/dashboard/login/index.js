@@ -1,24 +1,40 @@
 // import './index.css'
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import userApi from "../../api/userApi";
 
 const Login = ({user}) => {
-  const {status, setStatus} = useState(false)
-  const [formData, setFormData] = useState({})
-  const [isMatched, setIsMatched] = useState(true)
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
+  const [status, setStatus] = useState(false)
 
   const handleChange = (e)=>{
+    if(formData.email !== '' && formData.password !== ''){
+      setStatus(true)
+    }
     var name = e.target.name;
     setFormData((oldData) => {
         return {...oldData, [name]: e.target.value}
     })
-  }
-  const confirmPass =(e)=>{
-    if(e.target.value !== formData.password) setIsMatched(false)
-    if(e.target.value === formData.password) setIsMatched(true)
+    console.log(formData)
   }
 
+  const handleSubmit = async(e)=>{
+    e.preventDefault()
+    try {
+      const response = await userApi.post("/reseller/login", formData )
+      if(response.status===201){
+        localStorage.setItem("token", response.data.token)
+        navigate("/dashboard")
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
 
 
   return (
@@ -35,7 +51,7 @@ const Login = ({user}) => {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form >
+        <form onSubmit={handleSubmit}>
           <div>
             <label
               htmlFor="email"
@@ -94,7 +110,7 @@ const Login = ({user}) => {
         <p className="mt-10 text-center text-xs text-gray-500">
           Don't have a account?{" "}
           <Link
-            to={`/${user.toLowerCase()}/register`}
+            to="/reseller/register"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
             Register here

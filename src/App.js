@@ -11,26 +11,27 @@ import Customer from "./dashboard/Customer";
 import Orders from "./dashboard/Orders";
 import Withdraw from "./dashboard/Withdraw";
 import Profile from "./dashboard/Profile";
+import Header from "./dashboard/header";
+import AUTH from "./auth/AUTH";
 
 function App() {
   return (
-    <BrowserRouter>
-    <Dashboard>
-    <Sidebar/>
-      <Routes>
-
-        <Route path="/" element={<Home />} />
-        <Route path="/customers" element={<Customer />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/withdraw" element={<Withdraw />} />
-        <Route path="/profile" element={<Profile />} />
-        {/* <Route path="*" element={<NotFound />} /> */}
-      </Routes>
-    </Dashboard>
-    <Routes>
-      <Route to="hello" element={<HomePage/>}/>
-    </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter basename="/">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </BrowserRouter>
+      <BrowserRouter basename="/reseller">
+        <Dashboard/>
+      </BrowserRouter>
+      <BrowserRouter basename="/auth/">
+        <Routes>
+          <Route path="/reseller/login" element={<Login user={"reseller"} />} />
+          <Route path="/reseller/register" element={<Register user={"reseller"} />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 

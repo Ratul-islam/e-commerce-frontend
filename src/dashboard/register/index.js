@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Register = ({user}) => {
-  const {status, setStatus} = useState(false)
+  // const {status, setStatus} = useState(false)
   const [formData, setFormData] = useState({})
   const [isMatched, setIsMatched] = useState(true)
 
@@ -201,7 +201,7 @@ const Register = ({user}) => {
             <button
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 mt-2 text-xs font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              disabled={!status}
+              disabled={!isMatched}
             >
               Sign up
             </button>
@@ -211,7 +211,7 @@ const Register = ({user}) => {
         <p className="mt-10 text-center text-xs text-gray-500">
           Already Registered?{" "}
           <Link
-            to={`/${user.toLowerCase()}/login`}
+            to={`/reseller/login`}
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
             Login here
